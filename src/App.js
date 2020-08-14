@@ -1,11 +1,9 @@
 import React from 'react';
 import './App.css';
-import DatePicker from './component/datepicker';
-function App()  {
-  
+import BootstrapDatePicker from './component/boostraps-date-picker';
+function App() {
   return (
-    <DatePicker/>
+    <BootstrapDatePicker />
   );
 }
-
 export default App;
