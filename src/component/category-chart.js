@@ -7,7 +7,7 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import WooCommerceApi from '../common/woo-config'
 import { chart_options, range } from '../common/app-config'
-class SKUChart extends React.Component {
+class CategoryChart extends React.Component {
     constructor(props) {
         super(props);
         this.ranges = range
@@ -21,11 +21,13 @@ class SKUChart extends React.Component {
         this.handleCallback = this.handleCallback.bind(this)
         this.getData = this.getData.bind(this)
     }
+    // ${this.state.startDate}
     getData() {
-        WooCommerceApi.get(`reports/products?_locale=user&after=${this.state.startDate}T00:00:00&before=${this.state.endDate}T23:59:59&extended_info=true&order=desc&orderby=items_sold&page=1&per_page=25`).then(response => {
+        WooCommerceApi.get(`reports/categories?_locale=user&extended_info=true&order=desc&orderby=net_revenue&page=1&per_page=20&after=${this.state.startDate}T00:00:00&before=${this.state.endDate}T23:59:59`).then(response => {
             let data = [];
+            console.log(response)
             response.data.forEach(element => {
-                data.push([element.extended_info.sku, element.net_revenue])
+                data.push([element.extended_info.name, element.net_revenue])
             });
             this.setState({ chartData: data })
         })
@@ -72,4 +74,4 @@ class SKUChart extends React.Component {
         );
     }
 }
-export default SKUChart; 
+export default CategoryChart; 

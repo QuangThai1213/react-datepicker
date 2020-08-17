@@ -24,7 +24,6 @@ class ProductChart extends React.Component {
     getData() {
         WooCommerceApi.get(`reports/products?_locale=user&after=${this.state.startDate}T00:00:00&before=${this.state.endDate}T23:59:59&extended_info=true&order=desc&orderby=items_sold&page=1&per_page=25`).then(response => {
             let data = [];
-            console.log(response)
             response.data.forEach(element => {
                 data.push([element.extended_info.name, element.net_revenue])
             });
