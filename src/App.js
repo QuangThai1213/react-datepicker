@@ -1,9 +1,9 @@
 import React from 'react';
 import './App.css';
-import BootstrapDatePicker from './component/boostraps-date-picker';
+import RevenueChart from './component/revenue-chart';
 function App() {
   return (
-    <BootstrapDatePicker />
+    <RevenueChart />
   );
 }
 export default App;
