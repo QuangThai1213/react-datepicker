@@ -1,6 +1,9 @@
 import moment from 'moment';
-function chart_options(data) {
+function chart_options(title, data) {
     return {
+        title: {
+            text: title
+        },
         chart: {
             type: 'column'
         },
@@ -34,9 +37,9 @@ function chart_options(data) {
                 enabled: true,
                 color: '#FFFFFF',
                 align: 'center',
-                y: 10, // 10 pixels down from the top
+                y: 8, // 10 pixels down from the top
                 style: {
-                    fontSize: '10px',
+                    fontSize: '8px',
                     fontFamily: 'Verdana, sans-serif'
                 }
             }

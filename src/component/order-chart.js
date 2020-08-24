@@ -24,7 +24,7 @@ const optionDisplay = [
     { value: 3, label: 'Tax', bind: 'subtotals', bind2: 'taxes' },
     { value: 4, label: 'Refund', bind: 'subtotals', bind2: 'refunds' },
 ]
-class RevenueChart extends React.Component {
+class OrderChart extends React.Component {
     constructor(props) {
         super(props);
         this.ranges = range
@@ -52,11 +52,11 @@ class RevenueChart extends React.Component {
             'page': 1,
             'per_page': 100
         }
-        WooCommerceApi.get(`reports/revenue/stats`, params).then(response => {
+        WooCommerceApi.get(`reports/orders/stats`, params).then(response => {
             let chartData = [];
             let tableData = [];
-            response.data.intervals.forEach((element, index) => {
-                chartData.push([element.interval, element.subtotals.net_revenue])
+            response.data.intervals.forEach((element) => {
+                chartData.push([element.interval, element.subtotals.orders_count])
                 tableData.push(element)
             });
             this.setState({ chartData: chartData, tableData: tableData })
@@ -116,7 +116,7 @@ class RevenueChart extends React.Component {
         const tableColumn = this.state.columnData;
         return (
             <div style={{ padding: "10px", paddingLeft: "10px" }} >
-                {this.state.chartData.length > 0 && <HighchartsReact highcharts={Highcharts} options={chart_options('Revenue Chart', this.state.chartData)} key={this.state.chartData} />}
+                {this.state.chartData.length > 0 && <HighchartsReact highcharts={Highcharts} options={chart_options('Order Chart', this.state.chartData)} key={this.state.chartData} />}
                 {this.state.chartData.length === 0 && <h1>No Data</h1>}
                 <Container style={{ width: '100%' }}>
                     <Row>
@@ -184,6 +184,9 @@ class RevenueChart extends React.Component {
                                     <td>{index}</td>}
                                 {tableColumn.map((v, i) => {
                                     if (v.bind2) {
+                                        if (v.bind2 === "image") {
+                                            return <td key={i}><div dangerouslySetInnerHTML={{ __html: value[v.bind][v.bind2] }} /></td>
+                                        }
                                         if (v.bind2 === "net_revenue" || v.bind2 === "avg_order_value") {
                                             return <td key={i}><div>{value[v.bind][v.bind2]}{"đ"}</div></td>
                                         }
@@ -202,4 +205,4 @@ class RevenueChart extends React.Component {
         )
     }
 }
-export default RevenueChart; 
+export default OrderChart; 
